@@ -1,0 +1,362 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
+    
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: actor
+    description: Everything about your Pets
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: film
+    description: api for film
+paths:
+  /actors:
+    get:
+      tags:
+        - actor
+      summary: List all actors
+      operationId: listActors
+      responses:
+        '200':
+          description: An paged array of actors
+          # headers:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+        '400':
+          description: Invalid status value
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - actor
+      summary: Create a actor
+      operationId: createActor
+      requestBody:
+        description: Actor object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Actor'
+        required: true
+      responses:
+        '201':
+          description: Null response
+        '400':
+          description: Invalid status value
+        '409':
+          description: Actor already exists
+        '500':
+          description: Internal server error
+  /actors/{actorId}:
+    get:
+      tags:
+        - actor
+      summary: Info for a specific actor
+      operationId: getActorById
+      parameters:
+        - name: actorId
+          in: path
+          description: The actor ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+        '400':
+          description: Invalid status value
+        '404':
+          description: Actor not found
+        '500':
+          description: Internal server error
+    patch:
+      tags:
+        - actor
+      summary: Update an existing actor
+      operationId: updateActor
+      parameters:
+        - name: actorId
+          in: path
+          description: The actor ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Actor object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Actor'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        '400':
+          description: Invalid status value
+        '404':
+          description: Actor not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - actor
+      summary: Deletes a actor
+      operationId: deleteActor
+      parameters:
+        - name: actorId
+          in: path
+          description: The actor ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Null response
+        '400':
+          description: Invalid status value
+        '404':
+          description: Actor not found
+        '500':
+          description: Internal server error
+  /films:
+    get:
+      tags:
+        - film
+      summary: List all films
+      operationId: listFilms
+      responses:
+        '200':
+          description: An paged array of films
+          # headers:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        '400':
+          description: Invalid status value
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - film
+      summary: Create a film
+      operationId: createFilm
+      requestBody:
+        description: Film object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+        required: true
+      responses:
+        '201':
+          description: create Successfully
+        '400':
+          description: Invalid status value
+        '422':
+          description: Invalid input
+        '409':
+          description: Film already exists
+        '500':
+          description: Internal server error
+  /films/{filmId}:
+    get:
+      tags: 
+      - film
+      summary: Info for a specific film
+      operationId: getFilmById
+      parameters:
+        - name: filmId
+          in: path
+          description: The film ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        '400':
+          description: Invalid status value
+        '404':
+          description: Film not found
+        '500':
+          description: Internal server error
+    patch:
+      tags:
+        - film
+      summary: Update an existing film
+      operationId: updateFilm
+      parameters:
+        - name: filmId
+          in: path
+          description: The film ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+        required: true
+      responses:
+        '200':
+          description: Null response
+        '400':
+          description: Invalid status value
+        '404':
+          description: Film not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - film
+      summary: Deletes a film
+      parameters:
+        - name: filmId
+          in: path
+          description: The film ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: delete Successfully
+        '400':
+          description: Invalid status value
+        '404':
+          description: Film not found
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Actor:
+      type: object
+      properties:
+        actorId:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        lastUpdate:
+          type: string
+          format: date-time
+          example: "2023-02-15T04:34:33.727"
+    Film:
+      type: object
+      properties:
+        filmId:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "John"
+        description:
+          type: string
+          example: "Doe"
+        releaseYear:
+          type: number
+          format: int64
+          example: 2023
+        languageId:
+          type: integer
+          example: 1
+        originalLanguageId:
+          type: integer
+          example: 1
+        rentalDuration:
+          type: integer
+          example: 1
+        rentalRate:
+          type: number
+          example: 1.1
+        length:
+          type: integer
+          example: 1
+        replacementCost:
+          type: number
+          example: 1.1
+        rating:
+          type: string
+          example: "G"
+        specialFeatures:
+          type: string
+          example: "Trailers"
+        lastUpdate:
+          type: string
+          format: date-time
+          example: "2023-02-15T04:34:33.727"
+  requestBodies:
+    Actor:
+      description: Actor object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Actor'
+    ActorArray:
+      description: List of Actor object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Actor'
+    Film:
+      description: Film object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Film'
+    FilmArray:
+      description: List of Film object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Film'
+    # api_key:
+
